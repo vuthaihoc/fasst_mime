@@ -1,0 +1,21 @@
+{
+    "name": "vuthaihoc/fast_mime",
+    "authors": [
+        {
+            "name": "Vu Thai Hoc",
+            "email": "vuthaihoc.ttud@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "guzzlehttp/guzzle": "^6.0|^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ThikDev\\FastMime\\" : "src/"
+        }
+    }
+}
