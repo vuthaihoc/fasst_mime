@@ -550,36 +550,28 @@ class FileSignalDetector {
             [
                 0 => [0x50, 0x4B, 0x03, 0x04],
                 // and
-                30 => ['m', 'i', 'm', 'e',  't',  'y',  'p',  'e', 'a', 'p', 'p', 'l', 'i', 'c', 'a', 't', 'i', 'o', 'n', '/', 'v', 'n', 'd', '.', 'o', 'a', 's', 'i', 's', '.', 'o', 'p', 'e', 'n', 'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '.'],
-                // and
-                73 => ['t', 'e', 'x', 't'],
+                30 => "mimetypeapplication/vnd.oasis.opendocument.text",
             ]
         ],
         self::ODS => [
             [
                 0 => [0x50, 0x4B, 0x03, 0x04],
                 // and
-                30 => ['m', 'i', 'm', 'e',  't',  'y',  'p',  'e', 'a', 'p', 'p', 'l', 'i', 'c', 'a', 't', 'i', 'o', 'n', '/', 'v', 'n', 'd', '.', 'o', 'a', 's', 'i', 's', '.', 'o', 'p', 'e', 'n', 'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '.'],
-                // and
-                73 => ['s', 'p', 'r', 'e', 'a', 'd', 's', 'h', 'e', 'e', 't'],
+                30 => "mimetypeapplication/vnd.oasis.opendocument.spreadsheet",
             ]
         ],
         self::ODP => [
             [
                 0 => [0x50, 0x4B, 0x03, 0x04],
                 // and
-                30 => ['m', 'i', 'm', 'e',  't',  'y',  'p',  'e', 'a', 'p', 'p', 'l', 'i', 'c', 'a', 't', 'i', 'o', 'n', '/', 'v', 'n', 'd', '.', 'o', 'a', 's', 'i', 's', '.', 'o', 'p', 'e', 'n', 'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '.'],
-                // and
-                73 => ['p', 'r', 'e', 's', 'e', 'n', 't', 'a', 't', 'i', 'o', 'n'],
+                30 => "mimetypeapplication/vnd.oasis.opendocument.presentation",
             ]
         ],
         self::ODB => [
             [
                 0 => [0x50, 0x4B, 0x03, 0x04],
                 // and
-                30 => ['m', 'i', 'm', 'e',  't',  'y',  'p',  'e', 'a', 'p', 'p', 'l', 'i', 'c', 'a', 't', 'i', 'o', 'n', '/', 'v', 'n', 'd', '.', 'o', 'a', 's', 'i', 's', '.', 'o', 'p', 'e', 'n', 'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '.'],
-                // and
-                73 => ['b', 'a', 's', 'e'],
+                30 => "mimetypeapplication/vnd.oasis.opendocument.base",
             ]
         ],
         
@@ -704,6 +696,7 @@ class FileSignalDetector {
      * @return array|bool|false|int|string
      */
     public static function detectByContent($begin_bytes, $end_bytes = null) {
+//        echo "\n ====> " . $begin_bytes . "\n ====> " . $end_bytes ;
         // check by signal
         foreach (self::$signatures as $format => $signatures) {
             foreach ($signatures as $or_signature) {
@@ -730,6 +723,7 @@ class FileSignalDetector {
                             break;
                         }
                     }
+//                    echo "\n" . $format;
                 }
                 // if earlier we did not break inner loop, then all signatures matched
                 if ($passed) {
@@ -749,7 +743,7 @@ class FileSignalDetector {
     }
     
     public static function getMimeType($file) {
-        $format = self::detectByFilename($file) ?: self::detectByContent($file);
+        $format = self::detectByFile($file) ?: self::detectByContent($file);
         if ($format === false)
             return false;
         return $format[2];
