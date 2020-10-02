@@ -692,7 +692,7 @@ class FileSignalDetector {
     
     public static function detectByFile($filename) {
         $begin_bytes = file_get_contents( $filename, false, null, 0, 576);
-        $end_bytes = file_get_contents( $filename, false, null, -1, 576);
+        $end_bytes = file_get_contents( $filename, false, null, -576, 576);
         return self::detectByContent( $begin_bytes, $end_bytes);
     }
     
@@ -811,7 +811,7 @@ class FileSignalDetector {
             
             foreach ($bytes as $j => $byte) {
                 if (is_string($byte)) $byte = ord($byte);
-                if (!isset( $some_bytes[$offset+$i+$j] ) || $some_bytes[$offset+$i+$j] != $byte )
+                if (!isset( $some_bytes[$offset+$i+$j] ) || ord($some_bytes[$offset+$i+$j]) != $byte )
                     continue(2);
                 
             }
