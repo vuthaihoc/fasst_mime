@@ -7,7 +7,7 @@
 
 ## Install
 
-    composer require vuthaihoc/fasst_mime
+    composer require vuthaihoc/fast_mime
     
 
 ## Usage 
