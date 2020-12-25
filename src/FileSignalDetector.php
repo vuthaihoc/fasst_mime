@@ -685,7 +685,16 @@ class FileSignalDetector {
     public static function detectByFile($filename) {
         $begin_bytes = file_get_contents( $filename, false, null, 0, 576);
         $end_bytes = file_get_contents( $filename, false, null, -576, 576);
-        return self::detectByContent( $begin_bytes, $end_bytes);
+        $detected = self::detectByContent( $begin_bytes, $end_bytes);
+        if(!$detected){
+            $mime = mime_content_type($filename);
+            $detected = [
+                null,
+                array_search($mime, self::$mimeTypes),
+                $mime
+            ];
+        }
+        return $detected;
     }
     
     /**

@@ -22,6 +22,7 @@ class UrlFastMime {
     protected $stream_mime_types = [
         'application/octet-stream',
         'application/binary',
+        'application/download',
         'text/html',
         'text/plain',
     ];
@@ -42,6 +43,7 @@ class UrlFastMime {
                 'decode_content' => true,
                 'stream' => true,
                 'verify' => false,
+                'cookies' => true,
             ]);
     }
     
@@ -71,7 +73,7 @@ class UrlFastMime {
             }
             
             $body = $response->getBody();
-            $begin_bytes = $body->read( 568 );
+            $begin_bytes = ltrim($body->read( 568 ));
             $detected = FileSignalDetector::detectByContent( $begin_bytes );
             if($detected){
                 
@@ -109,7 +111,9 @@ class UrlFastMime {
         if(strpos( $content_type, ";")){
             list($content_type) = explode( ";", $content_type);
         }
-        
+
+        $content_type = trim( $content_type, "\"'");
+
         if ( ! in_array( $content_type, $this->stream_mime_types ) && preg_match( "/^[a-zA-Z0-9]/", $content_type) ) {
             throw new FoundMimeTypeException( $content_type );
         }

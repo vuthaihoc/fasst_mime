@@ -97,8 +97,7 @@ class ExampleTest extends TestCase
     }
     public function testPptFile()
     {
-//        $file = "http://file.fyicenter.com/a/sample.ppt";
-        $file = "https://hoatieu.vn/data/file/2020/08/07/file-powerpoint-tap-huan-bo-sach-canh-dieu-tiengg-viet.ppt";
+        $file = "http://file.fyicenter.com/a/sample.ppt";
         $ext = "ppt";
         $mime = "application/vnd.ms-powerpoint";
         $path = tempnam( sys_get_temp_dir(), 'php_');
